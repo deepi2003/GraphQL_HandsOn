@@ -1,15 +1,19 @@
 package org.deepti.tuts.GraphQLTuts.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AuthorFilter {
-    public Author getAuthor() {
-        return author;
+    private  String authorName;
+
+    @JsonProperty("AuthorName")
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
-    private Author author;
 
 }

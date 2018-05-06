@@ -11,6 +11,16 @@ extend type Query {
   countBooks: Long!
 }
 
+extend type Query {
+  allBooksByAuthor(filter: AuthorFilter):[Book]
+}
+
+
+input AuthorFilter {
+  AuthorName : String
+}
+
+
 
 extend type Mutation {
   newBook(title: String!, isbn: String!, pageCount: Int, author: ID!) : Book!

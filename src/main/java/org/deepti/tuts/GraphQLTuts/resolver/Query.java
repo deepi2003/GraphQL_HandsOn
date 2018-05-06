@@ -2,6 +2,7 @@ package org.deepti.tuts.GraphQLTuts.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import org.deepti.tuts.GraphQLTuts.model.Author;
+import org.deepti.tuts.GraphQLTuts.model.AuthorFilter;
 import org.deepti.tuts.GraphQLTuts.model.Book;
 import org.deepti.tuts.GraphQLTuts.respository.AuthorRepository;
 import org.deepti.tuts.GraphQLTuts.respository.BookRepository;
@@ -29,5 +30,11 @@ public class Query implements GraphQLQueryResolver {
 
     public long countAuthors() {
         return authorRepository.count();
+    }
+
+    public Iterable<Book> allBooksByAuthor(AuthorFilter authorFilter) {
+        String authorName = authorFilter.getAuthorName();
+        long id = authorRepository.findDistinctFirstByFirstName(authorName).getId();
+        return bookRepository.findBooksByAuthor_Id(id);
     }
 }

@@ -1,2 +1,4 @@
 .idea/
 build/
+.gradle/4.7
+.gradle
