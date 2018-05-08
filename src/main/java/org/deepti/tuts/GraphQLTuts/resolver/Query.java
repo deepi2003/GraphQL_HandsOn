@@ -7,6 +7,10 @@ import org.deepti.tuts.GraphQLTuts.model.Book;
 import org.deepti.tuts.GraphQLTuts.respository.AuthorRepository;
 import org.deepti.tuts.GraphQLTuts.respository.BookRepository;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Query implements GraphQLQueryResolver {
     private BookRepository bookRepository;
     private AuthorRepository authorRepository;
@@ -32,9 +36,18 @@ public class Query implements GraphQLQueryResolver {
         return authorRepository.count();
     }
 
-    public Iterable<Book> allBooksByAuthor(AuthorFilter authorFilter) {
+    public List<Book> allBooksByAuthor(AuthorFilter authorFilter) {
         String authorName = authorFilter.getAuthorName();
-        long id = authorRepository.findDistinctFirstByFirstName(authorName).getId();
-        return bookRepository.findBooksByAuthor_Id(id);
+        List<Author> authorList = authorRepository.findAllByFirstName(authorName);
+        if(authorList.size() > 0) {
+            return authorList.stream()
+                    .map(Author::getId)
+                    .collect(Collectors.toList())
+                    .stream()
+                    .map(id -> bookRepository.findBooksByAuthor_Id(id))
+                    .flatMap(list -> list.stream())
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
