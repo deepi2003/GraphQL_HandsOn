@@ -1,0 +1,64 @@
+# mutation{
+#   newAuthor(firstName:"John", lastName:"Jimmy") {
+#     id
+#   }
+# }
+
+# mutation{
+#   newBook(
+#     title:"GraphQL in Action",
+#     isbn:"1234AB",
+#     pageCount: 600,
+#     author: 3
+#   ) {
+#     id
+#   }
+# }
+
+# query{
+#   findAllAuthors{
+#     firstName
+#     lastName
+#     id
+#   }
+#   findAllBooks{
+#     title
+#     id
+#     pageCount
+#     author {
+#       firstName
+#     }
+#   }
+# }
+
+query{
+  allBooksByAuthor(filter:{AuthorName:"John"}, skip:2, first:5) {
+    title
+    id
+    author{
+      firstName
+      lastName
+    }
+  }
+}
+
+
+# query{
+#   findAllBooks{
+#     id
+#     title
+#     isbn
+#     pageCount
+#     author{
+#       firstName
+#       lastName
+#     }
+#   }
+# }
+
+# mutation{
+#   updateBookPageCount(pageCount: 500, id:2){
+#     title,
+#     pageCount
+#   }
+# }
