@@ -36,7 +36,7 @@ public class Query implements GraphQLQueryResolver {
         return authorRepository.count();
     }
 
-    public List<Book> allBooksByAuthor(AuthorFilter authorFilter) {
+    public List<Book> allBooksByAuthor(AuthorFilter authorFilter, int skip, int first) {
         String authorName = authorFilter.getAuthorName();
         List<Author> authorList = authorRepository.findAllByFirstName(authorName);
         if(authorList.size() > 0) {
@@ -46,6 +46,8 @@ public class Query implements GraphQLQueryResolver {
                     .stream()
                     .map(id -> bookRepository.findBooksByAuthor_Id(id))
                     .flatMap(list -> list.stream())
+                    .skip(skip)
+                    .limit(first)
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();

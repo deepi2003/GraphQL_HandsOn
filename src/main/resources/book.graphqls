@@ -9,7 +9,7 @@ type Book {
 extend type Query {
   findAllBooks: [Book]!
   countBooks: Long!
-  allBooksByAuthor(filter: AuthorFilter):[Book]
+  allBooksByAuthor(filter: AuthorFilter, skip: Int = 0, first: Int = 0):[Book]
 }
 
 input AuthorFilter {

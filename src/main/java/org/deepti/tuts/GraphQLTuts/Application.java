@@ -28,11 +28,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @RequestMapping("/hello")
-    public String getHello() {
-        return "hello";
-    }
-
     @Bean
     public BookResolver authorResolver(AuthorRepository authorRepository) {
         return new BookResolver(authorRepository);
@@ -54,6 +49,18 @@ public class Application {
             Author author = new Author("Herbert", "Schildt");
             authorRepository.save(author);
             bookRepository.save(new Book("Java: A Beginner's Guide, Sixth Edition", "0071809252", 728, author));
+
+           author= new Author("John", "Jack");
+            authorRepository.save(author);
+            bookRepository.save(new Book("Java8 In Action", "0071809252", 500, author));
+            bookRepository.save(new Book("Spring In Action", "0071809252", 550, author));
+            bookRepository.save(new Book("Hibernate In Action", "0071809252", 600, author));
+
+            author = new Author("John", "Jimmy");
+            authorRepository.save(author);
+            bookRepository.save(new Book("GraphQL In Action", "0071809252", 500, author));
+            bookRepository.save(new Book("REST In Action", "0071809252", 550, author));
+            bookRepository.save(new Book("Plan In Action", "0071809252", 600, author));
         };
     }
 
