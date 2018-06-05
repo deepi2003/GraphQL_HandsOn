@@ -1,6 +1,7 @@
 package org.deepti.tuts.GraphQLTuts.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import org.deepti.tuts.GraphQLTuts.errorhandler.BookNotFoundException;
 import org.deepti.tuts.GraphQLTuts.model.Author;
 import org.deepti.tuts.GraphQLTuts.model.Book;
 import org.deepti.tuts.GraphQLTuts.respository.AuthorRepository;
@@ -40,6 +41,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     public Book updateBookPageCount(Integer pageCount, Long id) {
         Book book = bookRepository.findOne(id);
+        if(book == null){
+            throw new BookNotFoundException("Book is not found", id);
+        }
         book.setPageCount(pageCount);
         bookRepository.save(book);
         return book;
